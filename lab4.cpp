@@ -13,11 +13,11 @@ using namespace std;
 /// !!!! PUT YOUR STACK HERE !!!
 /// !!!! DELETE MY STACK !!!!
 struct Stack {
-    int value;
+    double value;
     Stack *next;
 };
 
-Stack* push(Stack* parent, int value)
+Stack* push(Stack* parent, double value)
 {
     Stack *temp = new Stack;
     temp->value = value;
@@ -25,7 +25,7 @@ Stack* push(Stack* parent, int value)
     return temp;
 }
 
-Stack* pop(Stack* parent, int& out)
+Stack* pop(Stack* parent, double& out)
 {
     if (parent == nullptr) return nullptr;
     out = parent->value;
@@ -77,14 +77,14 @@ string convert(string source) // converting the 'source' string that contains in
             st = push(st, c);
         } else if (c == ')') {
             while (st && st->value != '(') {
-                int top;
+                double top;
                 st = pop(st, top);
                 result += char(top);
             }
-            if (st && st->value == '(') { int x; st = pop(st, x); }
+            if (st && st->value == '(') { double x; st = pop(st, x); }
         } else {
             while (st && priority(st->value) >= priority(c)) {
-                int top;
+                double top;
                 st = pop(st, top);
                 result += char(top);
             }
@@ -92,14 +92,14 @@ string convert(string source) // converting the 'source' string that contains in
         }
     }
     while (st) {
-        int top;
+        double top;
         st = pop(st, top);
         result += char(top);
     }
     return result;
 }
 
-double calculate(string rpn, int *values)
+double calculate(string rpn, double *values)
 {
     set<char> math;
     math.insert('*');
@@ -119,7 +119,7 @@ double calculate(string rpn, int *values)
         if (math.count(c) == 0) {
             st = push(st, values[(int) c - 'a']);
         } else {
-            int val1, val2;
+            double val1, val2;
             st = pop(st, val1);
             st = pop(st, val2);
 
@@ -141,7 +141,7 @@ int main()
             "Input the number of variables: ";
     int n;
     cin >> n;
-    int *values = new int[n];
+    double *values = new int[n];
 
     cout << "Input values of variables. \n";
     for (int i = 0; i < n; ++i)
